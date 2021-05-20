@@ -9,17 +9,20 @@ import Navbar from "./components/Navbar";
 import Home from "./pages/Home";
 import Login from "./pages/Login";
 import Register from "./pages/Register";
+import { AuthProvider } from "./context/auth";
 
 function App() {
   return (
-    <Container>
-      <BrowserRouter>
-        <Navbar />
-        <Route exact path="/" component={Home} />
-        <Route exact path="/login" component={Login} />
-        <Route exact path="/register" component={Register} />
-      </BrowserRouter>
-    </Container>
+    <AuthProvider>
+      <Container>
+        <BrowserRouter>
+          <Navbar />
+          <Route exact path="/" component={Home} />
+          <Route exact path="/login" component={Login} />
+          <Route exact path="/register" component={Register} />
+        </BrowserRouter>
+      </Container>
+    </AuthProvider>
   );
 }
 

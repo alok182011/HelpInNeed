@@ -1,11 +1,19 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import { Form, Button } from "semantic-ui-react";
 import gql from "graphql-tag";
 import { useMutation } from "@apollo/client";
 
 import "./Register.css";
 
+import { AuthContext } from "../context/auth";
+
 function Register(props) {
+  const context = useContext(AuthContext);
+
+  if (context.user) {
+    props.history.push("/");
+  }
+
   const [errors, setErrors] = useState({});
 
   const [values, setValues] = useState({
@@ -21,7 +29,7 @@ function Register(props) {
 
   const [addUser, { loading }] = useMutation(REGISTER_USER, {
     update(_, result) {
-      console.log(result);
+      context.login(result.data.register);
       props.history.push("/");
     },
     onError(err) {
@@ -38,6 +46,7 @@ function Register(props) {
   return (
     <div className="register-form">
       <Form
+        style={{ fontSize: 20 }}
         onSubmit={handleSubmit}
         noValidate
         className={loading ? "loading" : ""}

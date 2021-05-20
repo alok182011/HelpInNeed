@@ -1,0 +1,12 @@
+.postcard-container {
+  margin: 10px 0px !important;
+  background-color: #a7c8eb !important;
+  box-shadow: 1px 1px 3px 1px grey !important;
+}
+
+.postcard-body {
+  font-size: 20px;
+  color: black;
+  background-color: lightblue;
+  padding: 20px;
+}
