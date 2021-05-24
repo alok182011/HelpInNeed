@@ -1,5 +1,5 @@
 import React from "react";
-import { Grid, Button } from "semantic-ui-react";
+import { Grid } from "semantic-ui-react";
 import { Link } from "react-router-dom";
 
 import "./Welcome.css";
@@ -84,9 +84,9 @@ function Welcome() {
         </Grid.Row>
       </Grid>
       <h1 id="welcome-signin">
-        <Link to="/register">
+        <a href="/register">
           <h1>Sign Up 🐱‍🏍</h1>
-        </Link>
+        </a>
       </h1>
       <br />
       <br />

@@ -1,0 +1,32 @@
+.commentform-container {
+  border: 2px solid grey;
+  border-radius: 5px;
+  background-color: #a7c8eb;
+  box-shadow: 1px 1px 3px 0px grey;
+  display: flex;
+  margin: 0 auto;
+  padding: 10px;
+  width: 95%;
+}
+
+.commentform-infocard {
+  width: 30%;
+  height: 270px;
+  text-align: center;
+  padding: 5px;
+}
+
+.commentform-image {
+  margin: 30px auto;
+}
+
+.commentform-commentform {
+  height: 270px;
+  width: 70%;
+  padding: 5px;
+}
+
+.commentform-button {
+  float: right;
+  margin: 15px 0px !important;
+}

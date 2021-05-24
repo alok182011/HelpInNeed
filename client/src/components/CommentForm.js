@@ -3,11 +3,11 @@ import { Image, Form, TextArea, Button } from "semantic-ui-react";
 import gql from "graphql-tag";
 import { useMutation } from "@apollo/client";
 
-import "./PostForm.css";
+import "./CommentForm.css";
 
 import { AuthContext } from "../context/auth";
 
-function PostForm() {
+function CommentForm({ postId }) {
   const context = useContext(AuthContext);
 
   const [values, setValues] = useState({
@@ -18,43 +18,36 @@ function PostForm() {
     setValues({ ...values, [e.target.name]: e.target.value });
   };
 
-  const [createPost, { error }] = useMutation(CREATE_POST, {
-    update(proxy, result) {
-      const data = proxy.readQuery({
-        query: FETCH_POSTS_QUERY,
-      });
-
-      proxy.writeQuery({
-        query: FETCH_POSTS_QUERY,
-        data: {
-          getPosts: [result.data.createPost, ...data.getPosts],
-        },
-      });
+  const [createComment, { error }] = useMutation(CREATE_COMMENT, {
+    update() {
       values.body = "";
     },
     onError(err) {
       console.log(err);
     },
-    variables: values,
+    variables: {
+      body: values.body,
+      postId,
+    },
   });
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    createPost();
+    createComment();
   };
 
   return (
-    <div className="postform-container">
-      <div className="postform-infocard">
+    <div className="commentform-container">
+      <div className="commentform-infocard">
         <Image
-          className="postform-image"
+          className="commentform-image"
           size="small"
           src="https://image.freepik.com/free-vector/cute-sheltie-dog-cartoon-icon-illustration-animal-icon-concept-isolated-premium-flat-cartoon-style_138676-1564.jpg"
         />
         <h2>{context.user.username}</h2>
       </div>
-      <div className="postform-postform">
-        <h2>Let Us Help You :)</h2>
+      <div className="commentform-commentform">
+        <h2>Let's help :)</h2>
 
         <Form onSubmit={handleSubmit} noValidate>
           <TextArea
@@ -63,7 +56,7 @@ function PostForm() {
             name="body"
             value={values.body}
             onChange={handleChange}
-            placeholder="Tell us your problem..."
+            placeholder="Do you know a way to help ???"
             error={error ? 1 : 0}
             style={{
               minHeight: 150,
@@ -74,61 +67,31 @@ function PostForm() {
           <Button
             disabled={!values.body.trim()}
             type="submit"
-            className="postform-button"
+            className="commentform-button"
           >
-            Post
+            Comment
           </Button>
         </Form>
-        {error && (
-          <div className="ui error message">
-            <ul className="list">
-              <li>{error.graphQLErrors[0].message}</li>
-            </ul>
-          </div>
-        )}
       </div>
     </div>
   );
 }
 
-const CREATE_POST = gql`
-  mutation createPost($body: String!) {
-    createPost(body: $body) {
+const CREATE_COMMENT = gql`
+  mutation createComment($body: String!, $postId: String!) {
+    createComment(body: $body, postId: $postId) {
       id
       body
       createdAt
       username
-      likes {
-        username
-        id
-      }
       comments {
-        id
-        username
         body
+        username
         createdAt
+        id
       }
     }
   }
 `;
 
-const FETCH_POSTS_QUERY = gql`
-  {
-    getPosts {
-      id
-      body
-      createdAt
-      username
-      likes {
-        username
-      }
-      comments {
-        username
-        body
-        createdAt
-      }
-    }
-  }
-`;
-
-export default PostForm;
+export default CommentForm;

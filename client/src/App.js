@@ -9,6 +9,8 @@ import Navbar from "./components/Navbar";
 import Home from "./pages/Home";
 import Login from "./pages/Login";
 import Register from "./pages/Register";
+import MyPosts from "./pages/MyPosts";
+import SinglePost from "./pages/SinglePost";
 import { AuthProvider } from "./context/auth";
 
 function App() {
@@ -20,6 +22,8 @@ function App() {
           <Route exact path="/" component={Home} />
           <Route exact path="/login" component={Login} />
           <Route exact path="/register" component={Register} />
+          <Route exact path="/myposts" component={MyPosts} />
+          <Route exact path="/posts/:postId" component={SinglePost} />
         </BrowserRouter>
       </Container>
     </AuthProvider>

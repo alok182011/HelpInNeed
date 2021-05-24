@@ -9,9 +9,9 @@ import PostForm from "../components/PostForm";
 import PostCard from "../components/Postcard";
 import { AuthContext } from "../context/auth";
 
-import "./Home.css";
+import "./MyPosts.css";
 
-function Home() {
+function MyPosts() {
   const { user } = useContext(AuthContext);
 
   const {
@@ -22,25 +22,29 @@ function Home() {
 
   return user ? (
     <Grid columns={1}>
-      <Grid.Row className="home-postform">
+      <Grid.Row className="myposts-postform">
         <PostForm />
       </Grid.Row>
-      <Grid.Row className="home-title">
-        <Link style={{ fontSize: 18 }} to="/myposts">
-          My Posts
+      <Grid.Row className="myposts-title">
+        <Link style={{ fontSize: 18 }} to="/">
+          Recent Posts
         </Link>
-        <h1>Recent Posts</h1>
+        <h1>My Posts</h1>
       </Grid.Row>
-      <Grid.Row className="home-posts">
+      <Grid.Row className="myposts-posts">
         {loading ? (
           <h1>Loading...</h1>
         ) : (
           posts &&
-          posts.map((post) => (
-            <Grid.Column key={post.id}>
-              <PostCard post={post} />
-            </Grid.Column>
-          ))
+          posts.map((post) => {
+            if (post.username === user.username) {
+              return (
+                <Grid.Column key={post.id}>
+                  <PostCard post={post} />
+                </Grid.Column>
+              );
+            } else return null;
+          })
         )}
       </Grid.Row>
     </Grid>
@@ -68,4 +72,4 @@ const FETCH_POSTS_QUERY = gql`
   }
 `;
 
-export default Home;
+export default MyPosts;

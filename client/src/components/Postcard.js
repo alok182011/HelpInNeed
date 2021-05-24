@@ -1,19 +1,26 @@
-import React from "react";
+import React, { useContext } from "react";
 import { Card, Image, Button, Icon, Label } from "semantic-ui-react";
+import { Link } from "react-router-dom";
 import moment from "moment";
 
 import "./PostCard.css";
 
+import LikeButton from "./LikeButton";
+import { AuthContext } from "../context/auth";
+import DeletePostButton from "./DeletePostButton";
+
 function PostCard({
   post: { body, createdAt, comments, id, username, likes },
 }) {
+  const { user } = useContext(AuthContext);
+
   return (
     <Card fluid className="postcard-container">
-      <Card.Content>
+      <Card.Content as={Link} to={`/posts/${id}`}>
         <Image
           floated="right"
           size="mini"
-          src="https://react.semantic-ui.com/images/avatar/large/molly.png"
+          src="https://image.freepik.com/free-vector/cute-sheltie-dog-cartoon-icon-illustration-animal-icon-concept-isolated-premium-flat-cartoon-style_138676-1564.jpg"
         />
         <Card.Header>
           <h2>{username}</h2>
@@ -24,22 +31,18 @@ function PostCard({
         </Card.Description>
       </Card.Content>
       <Card.Content extra>
-        <Button as="div" labelPosition="right">
-          <Button color="pink" basic>
-            <Icon name="heart" />
-          </Button>
-          <Label as="a" basic color="teal" pointing="left">
-            {likes.length}
-          </Label>
-        </Button>
-        <Button as="div" labelPosition="right">
+        <LikeButton post={{ id, likes }} />
+
+        <Button labelPosition="right" as={Link} to={`/posts/${id}`}>
           <Button color="blue" basic>
             <Icon name="comments" />
           </Button>
-          <Label as="a" basic color="blue" pointing="left">
+          <Label basic color="blue" pointing="left">
             {comments.length}
           </Label>
         </Button>
+
+        {user && user.username === username && <DeletePostButton postId={id} />}
       </Card.Content>
     </Card>
   );

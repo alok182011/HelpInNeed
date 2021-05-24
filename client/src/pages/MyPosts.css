@@ -1,0 +1,11 @@
+.myposts-title {
+  display: block !important;
+  text-align: center;
+  margin: 10px 0;
+}
+
+.myposts-postform {
+  display: block;
+  height: 300px;
+  margin: 10px 0;
+}

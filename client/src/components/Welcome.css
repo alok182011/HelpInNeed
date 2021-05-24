@@ -1,6 +1,7 @@
 .welcome-title {
   font-family: "Eagle Lake";
-  color: purple;
+  color: rgb(202, 89, 202);
+  text-shadow: 5px 5px purple;
   font-size: 50px;
   text-align: center;
   margin: 120px 0px !important;

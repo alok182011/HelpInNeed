@@ -1,0 +1,13 @@
+.singlepost-comment-container {
+  margin: 10px auto !important;
+  background-color: #a7c8eb !important;
+  box-shadow: 1px 1px 3px 1px grey !important;
+  width: 95% !important;
+}
+
+.singlepost-comment-body {
+  font-size: 20px;
+  color: black;
+  background-color: lightblue;
+  padding: 20px;
+}
